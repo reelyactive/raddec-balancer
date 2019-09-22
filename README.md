@@ -5,13 +5,37 @@ raddec-balancer
 Balance raddec traffic
 ----------------------
 
-Balance raddec traffic across an arbitrary number of targets based on a given strategy.
+Balance raddec traffic across an arbitrary number of targets based on a given strategy.  The balancer ensures that any given transmitter is always mapped to the same target.  Currently only a modulo strategy (based on transmitterId) is available, although the design supports any number of strategies in future.  Typically used as part of a [raddec-relay](https://github.com/reelyactive/raddec-relay).
 
 
 Installation
 ------------
 
     npm install raddec-balancer
+
+
+Hello raddec-balancer!
+----------------------
+
+The following code will configure the relaying of raddecs to the localhost (127.0.0.1) and will create and send a single test raddec.
+
+```javascript
+const RaddecBalancer = require('raddec-balancer');
+const Raddec = require('raddec');
+
+const NUMBER_OF_TARGETS = 4;
+
+let balancer = new RaddecBalancer({ numberOfTargets: NUMBER_OF_TARGETS });
+
+let raddec = new Raddec({
+    transmitterId: "aa:bb:cc:dd:ee:ff",
+    transmitterIdType: Raddec.identifiers.TYPE_EUI48
+});
+
+balancer.balanceRaddec(raddec, function(raddec, targetIndex) {
+  console.log(targetIndex); // targetIndex = 3
+});
+```
 
 
 License
