@@ -17,7 +17,7 @@ Installation
 Hello raddec-balancer!
 ----------------------
 
-The following code will configure the relaying of raddecs to the localhost (127.0.0.1) and will create and send a single test raddec.
+The following code will run a single raddec through the balancer to determine to which of four targets it will be mapped (possible outputs are 0, 1, 2 or 3).
 
 ```javascript
 const RaddecBalancer = require('raddec-balancer');
